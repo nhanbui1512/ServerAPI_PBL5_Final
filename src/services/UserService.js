@@ -50,8 +50,8 @@ let checkLogin = (email, password) => {
                     if (check) {
                         userData.errCode = 0;
                         userData.message = "login success";
-                        console.log(token)
                         userData.token = token;
+                        userData.idUser = user.id
                     } else {
                         userData.errCode = 3;
                         userData.message = "Password is incorrect, please enter other password!"

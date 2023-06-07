@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Biểu đồ</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+   <div  class="input-group mb-3 search-form">
+        <input id="input_date" name="searchinput" type="date" class="form-control" placeholder="Tên Doanh Nghiệp">
+        <div class="input-group-append">
+            <button id="search_btn" class="btn btn-outline-dark">Search</button>
+        </div>
+    </div>
+  <canvas id="myChart"></canvas>
+
+  <script>
+
+     // Cấu hình biểu đồ
+      var options = {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+
+      };
+
+      var myChart = {}
+
+      // Lấy thẻ canvas và vẽ biểu đồ
+      var ctx = document.getElementById('myChart').getContext('2d');
+      
+     
+
+    const inputDate = document.getElementById('input_date')
+    const searchBtn = document.getElementById('search_btn')
+
+
+    searchBtn.addEventListener('click', ()=>{
+      const dateValue = inputDate.value
+
+      if(dateValue)
+      {
+
+        const year = dateValue.split('-')[0]
+        const month = dateValue.split('-')[1]
+        const day = dateValue.split('-')[2]
+
+
+        var http = new XMLHttpRequest();
+        http.open('GET',`/api/getwarningbytime?day=${day}&month=${month}&year=${year}`,true)
+
+        http.onreadystatechange = function(){
+            if(this.readyState == 4){
+                var response = JSON.parse(this.responseText)
+                if(response.result == true){
+                  const warnings = response.data
+
+                  const result = [0, 0, 0, 0, 0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                  for(var i = 0 ; i < warnings.length ; i++){
+                      result[Number(warnings[i].hours) ] ++ 
+                  }
+
+                  myChart.data.datasets[0].data = result
+                  myChart.update();
+                }
+                else{
+                }
+
+            }
+            
+            }
+        http.send()
+
+       
+
+      }
+    })  
+
+  
+      const callData = ({day,month,year}) =>{
+        var http = new XMLHttpRequest();
+        http.open('GET',`/api/getwarningbytime?day=${day}&month=${month}&year=${year}`,true)
+
+        http.onreadystatechange = function(){
+            if(this.readyState == 4){
+                var response = JSON.parse(this.responseText)
+                if(response.result == true){
+                  const warnings = response.data
+
+                  const result = [0, 0, 0, 0, 0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+                  for(var i = 0 ; i < warnings.length ; i++){
+                      result[Number(warnings[i].hours) ] ++ 
+                  }
+
+                  // Tạo dữ liệu biểu đồ
+                    var data = {
+                      labels: ['0', '1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24',],
+                      datasets: [{
+                        label: 'Lần cảnh báo',
+                        data: result,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                      }]
+                    };
+
+                      myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: data,
+                        options: options
+                      });
+                }
+                else{
+                }
+
+            }
+            
+            }
+        http.send()
+      }
+
+     
+     callData({day: 3, month:5, year: 2023})
+   
+  </script>
+
+  <style>
+    .search-form{
+      margin: 18px 0px;
+    }
+
+  </style>
+</body>
+</html>

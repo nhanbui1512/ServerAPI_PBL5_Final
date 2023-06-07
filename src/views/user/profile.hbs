@@ -1,0 +1,123 @@
+ <div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="/admin/themttkd">Thêm Doanh Nghiệp</a></li>
+        </ol>
+    </div>
+</div>
+            <!-- row -->
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="media align-items-center mb-4">
+                        
+                        <div class="media-body">
+                            <h3 class="mb-0">{{user.UserName}}</h3>
+                            <p class="text-muted mb-0">{{user.Address}}</p>
+                            <p class="text-muted mb-0">{{user.Email}}</p>
+                            <button id="saveBtn" style="padding: 5px 10px; display:none;" class="btn btn-primary">Lưu</button>
+                        </div>
+                        
+                    </div>
+
+                    <h4 class="card-title">Thông Tin Người Dùng</h4>
+                    <div class="form-validation">
+                        <form class="form-valide" action="/user/changeprofile" method="post">
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-username">Email<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <input value="{{user.email}}"  type="text" class="form-control" id="val-username" name="UserName" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-confirm-password">Biển số xe<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <input value="{{user.carNumberPlates}}" type="text" class="form-control" id="val-confirm-password" name="carNumberPlates" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-confirm-password">Số Điện Thoại<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <input value="{{user.phoneNumber}}" require type="text" class="form-control" id="val-confirm-password" name="phoneNumber"  required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-confirm-password">Tuổi<span class="text-danger">*</span>
+                                </label>
+                                <div class="col-lg-6">
+                                    <input value="{{user.old}}" require type="number" class="form-control" id="val-confirm-password" name="old"  required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-8 ml-auto">
+                                    <a href="/user" class="btn btn-primary">Back</a>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form id="form_avatar" action="/admin/changeava?ID={{user._id}}" method="post" enctype="multipart/form-data" style="display: none;">
+                            <input name="Image" type="file" id="input_avatar" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .avatar_container{
+        position: relative;
+    }
+    .change_btn{
+        position: absolute;
+        background-color: #e4e6eb;
+        padding: 5px 8px;
+        border-radius: 100%;
+        color: #000;
+        bottom: -6px ;
+        right: 16px;
+        cursor: pointer;
+        font-size: 12px;
+    }
+
+</style>
+
+
+{{!-- 
+    <script src="/template/plugins/validation/jquery.validate.min.js"></script>
+    <script src="/template/plugins/validation/jquery.validate-init.js"></script> --}}
+
+    <script>
+        const avatarImg = document.getElementById('avatar_image')
+        const changeAvaBtn = document.querySelector('.change_btn')
+        const inputFile = document.getElementById('input_avatar')
+        const saveBtn = document.getElementById('saveBtn')
+        const formAvatar = document.getElementById('form_avatar')
+
+        inputFile.onchange = function(e){
+            const file = e.target.files[0]
+            avatarImg.src = (URL.createObjectURL(file))
+            saveBtn.style.display = 'block'
+        } 
+
+        saveBtn.addEventListener('click', function(){
+            formAvatar.submit()
+        })  
+        
+        changeAvaBtn.addEventListener('click', function(){
+            inputFile.click()
+        })
+    </script>

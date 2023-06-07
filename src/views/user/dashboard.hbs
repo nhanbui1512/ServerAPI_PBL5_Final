@@ -1,0 +1,65 @@
+<div class="row page-titles mx-0">
+    <div class="col p-md-0">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/user">Dashboard</a></li>
+            <li class="breadcrumb-item active"><a href="">Danh Sách Cảnh Báo</a></li>
+        </ol>
+    </div>
+</div>
+
+
+
+<div class="col">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Danh Sách Cảnh Báo</h4>
+            <div class="table-responsive">
+                <table class="table header-border">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tên Cảnh Báo</th>
+                            <th scope="col">Thời gian</th>
+                            <th style="text-align:center ;" scope="col">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each data}}
+                            <tr>
+                                <th>{{this.idWarning}}</th>
+                                <td>Cảnh báo buồn ngủ</td>
+                                <td>{{this.createAt}}</td>
+                                <td style="text-align: center;"></td>
+                            </tr>
+                        {{/each}}
+                        
+
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cart{
+        position: relative;
+    }
+    #addbtn{
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        font-size: 10px;
+        background-color: #7571f9;
+        padding: 10px 14px;
+        color: #fff !important;
+        border-radius: 4px;
+        text-align: center;
+    }
+     #addbtn:hover{
+        opacity: 0.8;
+     }
+</style>
