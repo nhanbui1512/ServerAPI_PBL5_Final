@@ -260,7 +260,108 @@ let handleGetAllCode = (type) => {
     })
 }
 
+const getUserById = ({idUser}) =>{
+    return new Promise( async (resolve,reject) =>{
+        try {
+            const user = await db.users.findOne({
+                where: { id: idUser },
+                raw: false
+            })
+            resolve(user)
+        } catch (error) {
+           reject(error) 
+        }
+    })
+}
+
+const findByEmail = ({email}) =>{
+    return new Promise ( async (resolve , reject) =>{
+        try {
+            const user = await db.users.findOne({
+                where: {email: email},
+                raw: true
+            })
+            resolve(user)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const updateUser = ({phoneNumber, carNumberPlates , old, idUser }) =>{
+    return new Promise ( async (resolve , reject) =>{
+        try {
+            let user = await db.users.findOne({
+                where: {
+                    id: idUser
+                },
+                raw: false
+            })
+
+            if(user){
+                user.cartNumberPlates = carNumberPlates
+                user.phoneNumber = phoneNumber
+                user.old = old
+                await user.save();
+                resolve(true)
+            }
+
+            else{
+                resolve(false)
+            }
+            
+        } catch (error) {
+            reject(error)  
+        }
+    })
+}
+
+
+const changePassword  = ({oldPass, newPass, idUser}) =>{
+    return new Promise( async (resolve, reject) =>{
+        try {
+            const user = await db.users.findOne({
+                where: {
+                    id: idUser
+                },
+                raw: false
+            })
+
+            if(user){
+                let check = await bcrypt.compare(oldPass, user.password);
+                
+                if(check){
+                    hashPassword(newPass)
+                        .then(hash =>{
+                            user.password = hash
+                            user.save()
+                            resolve(true)
+                        })
+                        .catch(err=>{
+                            reject(err)
+                        })
+                }
+                else{
+                    resolve(false)
+                }
+            }
+            else{
+                resolve(false)
+            }
+
+            
+
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 export default {
+    hashPassword,
+    changePassword,
+    updateUser,
+    findByEmail,
+    getUserById,
     checkLogin: checkLogin,
     handleGetAllUser: handleGetAllUser,
     handleCreateNewUser: handleCreateNewUser,

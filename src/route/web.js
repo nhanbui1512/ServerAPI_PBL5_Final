@@ -14,12 +14,13 @@ let initWebRoutes = (app) => {
 
 
     router.post('/api/login', userController.handleLogin)
+    router.get('/register',homeController.register)
     router.post('/api/sendwarning', isLoginMiddleWare, warningController.createWarning)
-
     router.get('/api/getwarningbytime',userMiddleware,warningController.getWarningByTime)
-
-
     router.get('/',homeController.index)
+
+    
+    
     app.use('/user',userMiddleware,userRoute)
     return app.use("/", router);
 }

@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.TEXT,
     old: DataTypes.INTEGER,
     name: DataTypes.TEXT,
-    phoneNumber: DataTypes.TEXT, cartNumberPlates: DataTypes.TEXT,
+    phoneNumber: DataTypes.TEXT,
+    cartNumberPlates: DataTypes.TEXT,
     access: DataTypes.INTEGER
   }, {
     sequelize,
