@@ -175,7 +175,12 @@ const changeprofile = async (req,response) =>
 
 }
 
+const statisticMonth = (req,response) =>{
+    response.render('user/chartMonth.hbs', {layout: 'userLayout.hbs'})
+}
+
 export default {
+    statisticMonth,
     changePassword,
     passwordPage,
     changeprofile,

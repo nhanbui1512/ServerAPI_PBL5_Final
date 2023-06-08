@@ -11,7 +11,9 @@ router.get('/logout',userController.logOut)
 router.get('/profile',userController.profile)
 router.get('/',userController.index)
 router.get('/password', userController.passwordPage)
+router.get('/statisticmonth',userController.statisticMonth)
 
 router.post('/changeprofile',userController.changeprofile)
 router.post('/changepassword',userController.changePassword)
+
 module.exports = router;

@@ -57,7 +57,7 @@
                 if(response.result == true){
                   const warnings = response.data
 
-                  const result = [0, 0, 0, 0, 0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                  const result = [0,0,0,0,0,0,0,0,0,0,0,0]
 
                   for(var i = 0 ; i < warnings.length ; i++){
                       result[Number(warnings[i].hours) ] ++ 
@@ -82,7 +82,7 @@
   
       const callData = ({day,month,year}) =>{
         var http = new XMLHttpRequest();
-        http.open('GET',`/api/getwarningbytime?day=${day}&month=${month}&year=${year}`,true)
+        http.open('GET',`/api/getwarningbymonth?year=${year}`,true)
 
         http.onreadystatechange = function(){
             if(this.readyState == 4){
@@ -90,15 +90,15 @@
                 if(response.result == true){
                   const warnings = response.data
 
-                  const result = [0, 0, 0, 0, 0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0]
+                  const result = [0,0,0,0,0,0,0,0,0,0,0,0]
 
                   for(var i = 0 ; i < warnings.length ; i++){
-                      result[Number(warnings[i].hours) ] ++ 
+                      result[Number(warnings[i].month) ] ++ 
                   }
 
                   // Tạo dữ liệu biểu đồ
                     var data = {
-                      labels: ['0', '1', '2', '3', '4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24',],
+                      labels: ['1', '2', '3', '4', '5','6','7','8','9','10','11','12'],
                       datasets: [{
                         label: 'Lần cảnh báo',
                         data: result,

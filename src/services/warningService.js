@@ -1,6 +1,6 @@
 import isLoginMiddleWare from "./JwtService";
 import db from "../models";
-const { Op } = require('sequelize');
+const { Op,literal  } = require('sequelize');
 
 let createWarning = (idUser) => {
     return new Promise(async (resolve, reject) => {
@@ -59,11 +59,35 @@ const getWarningByTime = ({idUser, day, month , year}) =>{
             reject(error)
         }
     })
+
+
 }
 
 
+const getWarningByYear = ({ year, idUser}) =>{
+    return new Promise( async (resolve, reject) =>{
+        try {
+            
+            const startDate = new Date(`${year}-01-01`);
+            const endDate = new Date(`${year}-12-31`);
+
+            const records = await db.warnings.findAll({
+                where: {
+                    createdAt: {
+                        [Op.between]: [startDate, endDate]
+                      },
+                      idUser: idUser
+                },
+              });
+            resolve(records)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 
 export default {
+    getWarningByYear,
     getWarningByTime,
     getWarningByUser : getWarningByUser,
     createWarning: createWarning
