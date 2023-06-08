@@ -174,6 +174,7 @@ const changeprofile = async (req,response) =>
         })
 
 }
+
 export default {
     changePassword,
     passwordPage,

@@ -356,7 +356,30 @@ const changePassword  = ({oldPass, newPass, idUser}) =>{
         }
     })
 }
+
+const createAccount = ({email , password, phoneNumber, carNumberPlates ,old }) => {
+
+    return new Promise ( async(resovle, reject) =>{
+        let hashPass = await hashPassword(password);
+
+        try {
+            await db.users.create({
+                email: email,
+                password: hashPass,
+                phoneNumber: phoneNumber,
+                cartNumberPlates: carNumberPlates,
+                old: old,
+                access: 0
+            })
+
+            resovle(true)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 export default {
+    createAccount,
     hashPassword,
     changePassword,
     updateUser,

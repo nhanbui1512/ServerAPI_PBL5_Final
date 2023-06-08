@@ -17,6 +17,7 @@ let initWebRoutes = (app) => {
     router.get('/register',homeController.register)
     router.post('/api/sendwarning', isLoginMiddleWare, warningController.createWarning)
     router.get('/api/getwarningbytime',userMiddleware,warningController.getWarningByTime)
+    router.post('/signup',homeController.signUp)
     router.get('/',homeController.index)
 
     
